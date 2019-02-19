@@ -1,6 +1,7 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const miniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -14,6 +15,7 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/'
   },
+  devtool: 'source-map',
   devServer: {
     contentBase: 'dist',
     overlay: true,
@@ -24,6 +26,42 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader'            
+          }
+        ]
+      },
+      {
+        test: /\.(scss|sass)$/,
+        use: [          
+          {
+            loader: miniCssExtractPlugin.loader
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
+      },
       {
         test: /\.pug$/,
         use: [
@@ -46,9 +84,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    new miniCssExtractPlugin(),
     new htmlWebpackPlugin({
       template: './src/build/pug/index.pug'
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 }
