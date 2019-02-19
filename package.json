@@ -4,8 +4,10 @@
   "description": "Express for Boiler Plate",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku": "node server/express.js"
+    "prod": "webpack --config=config/webpack.prod.js",
+    "dev": "webpack-dev-server --config=config/webpack.dev.js",
+    "heroku:dev": "nodemon --inspect --watch config --watch server --watch src server/express.js",
+    "heroku:server": "node -r dotenv/config server/express.js"
   },
   "author": "Daniel Correa",
   "license": "ISC",
@@ -17,7 +19,20 @@
     "node_modules"
   ],
   "dependencies": {
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "dotenv": "^6.2.0"
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.10",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "webpack": "^4.29.5",
+    "webpack-dev-middleware": "^3.5.2",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.2.3"
   }
 }
