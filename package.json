@@ -1,0 +1,23 @@
+{
+  "name": "herokuboilerexpress",
+  "version": "1.0.0",
+  "description": "Express for Boiler Plate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku": "node server/express.js"
+  },
+  "author": "Daniel Correa",
+  "license": "ISC",
+  "engines": {
+    "node": "10.14.2",
+    "npm": "6.4.1"
+  },
+  "cacheDirectories": [
+    "node_modules"
+  ],
+  "dependencies": {
+    "express": "^4.16.4",
+    "dotenv": "^6.2.0"
+  }
+}
