@@ -8,6 +8,8 @@ const babelMinifyWebpackPlugin = require('babel-minify-webpack-plugin');
 const uglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const compressionWebackPlugin = require('compression-webpack-plugin');
 const brotliWebpackplugin = require('brotli-webpack-plugin');
+const cleanWebpackPluginOptions = require('./cleanWebpackPlugin.js');
+
 
 module.exports = {
   entry: {
@@ -80,7 +82,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new cleanWebpackPlugin([ path.join( __dirname, 'dist' ) ]),
+    new cleanWebpackPlugin(cleanWebpackPluginOptions.pathsToClean, cleanWebpackPluginOptions.cleanOptions),
     new htmlWebpackPlugin({
       template: './src/build/pug/index.pug'
     }),

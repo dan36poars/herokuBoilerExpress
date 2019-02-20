@@ -84,10 +84,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new miniCssExtractPlugin(),
     new htmlWebpackPlugin({
       template: './src/build/pug/index.pug'
-    }),
-    new webpack.HotModuleReplacementPlugin()
+    })
   ]
 }
