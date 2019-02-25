@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const htmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const optimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const babelMinifyWebpackPlugin = require('babel-minify-webpack-plugin');
@@ -28,7 +29,10 @@ module.exports = {
         test: /\.(scss|sass)$/,
         use: [
           {
-            loader: miniCssExtractPlugin.loader
+            loader: 'file-loader?name=assets/css/[name].css'
+          },
+          {
+            loader: 'extract-loader'
           },
           {
             loader: 'css-loader',
@@ -53,7 +57,7 @@ module.exports = {
       },
       {
         test: /\.pug$/,
-        use: [
+        use: [          
           {
             loader: 'pug-loader'
           }
@@ -84,13 +88,27 @@ module.exports = {
   plugins: [
     new cleanWebpackPlugin(cleanWebpackPluginOptions.pathsToClean, cleanWebpackPluginOptions.cleanOptions),
     new htmlWebpackPlugin({
+      filename:  'index.html',
       template: './src/build/pug/index.pug'
+    }),
+    new htmlWebpackPlugin({
+      filename: 'contact.html',
+      template:  './src/build/pug/contact.pug'
+    }),
+    new htmlWebpackIncludeAssetsPlugin({
+      files: ['contact.html'],
+      assets: ['assets/css/contact.css'],
+      append: true
+    }),
+    new htmlWebpackIncludeAssetsPlugin({
+      files: ['index.html'],
+      assets: ['assets/css/index.css'],
+      append: true
     }),
     new miniCssExtractPlugin({
       filename: 'assets/css/[name].css',
       chunkFilename: '[id].css' 
     }),
-    // active this plugin don't apper the source map to css
     new optimizeCssAssetsWebpackPlugin(),
     // new babelMinifyWebpackPlugin()
     new uglifyJsWebpackPlugin(),

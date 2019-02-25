@@ -1,0 +1,20 @@
+// contact.scss
+
+@import './_base';
+@import './_profile';
+
+.container {
+	&--header {
+		color: white;
+		text-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5);
+	}
+
+	&--img{
+		margin-top: 15px;
+		border: 15px solid black;
+		border-radius: 15px;
+		box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.7);
+		width: 500px;
+		height: 300px;
+	}
+}

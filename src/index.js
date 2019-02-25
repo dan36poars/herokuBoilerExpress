@@ -1,5 +1,6 @@
 require('./build/js/app.js');
-require('./build/scss/main.scss');
+require('./build/scss/index.scss');
+require('./build/scss/contact.scss');
 
 // if (module.hot) {
 //   	module.hot.accept('./build/js/app.js', () => {
