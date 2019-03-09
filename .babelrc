@@ -13,6 +13,7 @@
 		"@babel/plugin-transform-regenerator",
 		"@babel/plugin-transform-runtime",
 		"@babel/plugin-transform-arrow-functions",
+		"@babel/plugin-syntax-dynamic-import",
 		"syntax-async-functions",
 		"babel-plugin-transform-async-to-promises",
 		"babel-plugin-async-to-promises"

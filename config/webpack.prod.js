@@ -9,18 +9,40 @@ const babelMinifyWebpackPlugin = require('babel-minify-webpack-plugin');
 const uglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const compressionWebackPlugin = require('compression-webpack-plugin');
 const brotliWebpackplugin = require('brotli-webpack-plugin');
-const cleanWebpackPluginOptions = require('./cleanWebpackPlugin.js');
 
 
 module.exports = {
   entry: {
-    main: ['./src/index.js']
+    index: ['./src/build/js/index.bundle.js'],
+    contato: ['./src/build/js/contato.bundle.js'],
   },
   mode: 'production',
   output: {
     filename: 'assets/js/[name]-bundle.js',
     path: path.resolve( __dirname, '../dist'),
-    sourceMapFilename: '[file].map'
+    sourceMapFilename: '[file].map'    
+  },
+  optimization:{
+    splitChunks: {
+      chunks: 'all',
+      name: true,
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          minChunks: 5,
+          maxInitialRequests: 5,
+          minSize: 0,
+          name: 'commons'
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,        
+          chunks: "initial",
+          priority: 10,
+          enforce: true,
+          name: 'vendors'
+        }        
+      }
+    }
   },
   devtool:'source-map',
   module: {
@@ -86,23 +108,34 @@ module.exports = {
     ]
   },
   plugins: [
-    new cleanWebpackPlugin(cleanWebpackPluginOptions.pathsToClean, cleanWebpackPluginOptions.cleanOptions),
+    new cleanWebpackPlugin({
+    			root:  process.cwd(),
+  				verbose: false,
+ 					dry: false
+    		}
+    ),
     new htmlWebpackPlugin({
       filename:  'index.html',
-      template: './src/build/pug/index.pug'
+      template: './src/build/pug/index.pug',
+      chunks: ['index', 'vendors']
     }),
     new htmlWebpackPlugin({
       filename: 'contact.html',
-      template:  './src/build/pug/contact.pug'
-    }),
+      template:  './src/build/pug/contact.pug',
+      chunks: ['contato', 'vendors']
+    }),    
     new htmlWebpackIncludeAssetsPlugin({
-      files: ['contact.html'],
-      assets: ['assets/css/contact.css'],
+      files: ['index.html'],
+      assets: [
+        'assets/css/index.css'        
+      ],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
-      files: ['index.html'],
-      assets: ['assets/css/index.css'],
+      files: ['contact.html'],
+      assets: [
+        'assets/css/contact.css'             
+      ],
       append: true
     }),
     new miniCssExtractPlugin({

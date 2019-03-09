@@ -1,3 +1,4 @@
+require('@babel/register');
 const express = require('express');
 const app = express();
 
@@ -17,10 +18,11 @@ if ( !isDev ) {
     	compiler,
     	configDevClient.devServer
   	);
-
- 	const port = process.env.PORT || 8080;
+  	
   app.use(webpackDevMiddleware);
   app.use(webpackHotMiddlware);
+
+ 	const port = process.env.PORT || 8080;
   console.log('Middleware Enabled...');
   console.log('running express in http://localhost:' + port + ' in '+ process.env.NODE_ENV );
 

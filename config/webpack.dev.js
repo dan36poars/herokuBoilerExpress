@@ -5,14 +5,12 @@ const miniCssExtractPlugin = require('mini-css-extract-plugin');
 const modernizrWebpackPlugin = require('modernizr-webpack-plugin');
 const htmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const configMorenizr = require('./modernizr.config.js');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
-    index: [
-    'webpack-hot-middleware/client?reload=true',
-    './src/index.js'
-    ]
+    index: ['webpack-hot-middleware/client?reload=true','./src/build/js/index.bundle'],
+    contato: ['webpack-hot-middleware/client?reload=true', './src/build/js/contato.bundle'],
   },
   mode:"development",
   output: {
@@ -20,17 +18,39 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/'
   },
-  devtool: 'source-map',
+  optimization:{
+    splitChunks: {
+      chunks: 'all',
+      name: true,
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          minChunks: 5,
+          maxInitialRequests: 5,
+          minSize: 0,
+          name: 'commons'
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,        
+          chunks: "initial",
+          priority: 10,
+          enforce: true,
+          name: 'vendors'
+        }        
+      }
+    }
+  },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: 'dist',
     overlay: true,
-    hot:true,
+    hot: true,
     stats: {
       colors: true
     }
   },
   module: {
-    rules: [
+    rules: [      
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -42,31 +62,23 @@ module.exports = {
       },
       {
         test: /\.(scss|sass)$/,
-        use: [          
+        use: [
           {
-            loader: 'file-loader?name=[name].css'
-          },
-          {
-            loader: 'extract-loader'
+            loader: 'style-loader'
           },
           {
             loader: 'css-loader',
-            options: {
-              importLoaders: 2,
+            options: {     
+              importLoaders: 2,      
               sourceMap: true
             }
           },
           {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'postcss-loader',           
           },
           {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true
-            }
+            loader: 'sass-loader'
+            
           }
         ]
       },
@@ -88,7 +100,7 @@ module.exports = {
             }
           }
         ]
-      }
+      }     
     ]
   },
   plugins: [
@@ -96,26 +108,31 @@ module.exports = {
     new miniCssExtractPlugin(),
     new htmlWebpackPlugin({
       filename: 'index.html',
-      template: './src/build/pug/index.pug'
+      template: './src/build/pug/index.pug',
+      chunks: ['index', 'vendors']
     }),
     new htmlWebpackPlugin({
       filename: 'contact.html',
-      template:  './src/build/pug/contact.pug'
+      template:  './src/build/pug/contact.pug',
+      chunks: ['contato', 'vendors']
     }), 
     new htmlWebpackIncludeAssetsPlugin({
       files: ['contact.html'],
-      assets: ['contact.css'],
+      assets: [],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
-      assets: ['index.css'],
+      assets: [],
       append: true
     }),
     new modernizrWebpackPlugin(configMorenizr),
     new htmlWebpackIncludeAssetsPlugin({
       assets: ['modernizr-bundle.js'],
       append: false
-    })
+    }),
+    // new BundleAnalyzerPlugin({
+    //  generateStatsFile: true
+    // })
   ]
 }
