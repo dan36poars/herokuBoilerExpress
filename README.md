@@ -97,9 +97,9 @@ dentro da propriedade plugins adicionar: <br />
       ...
     ]
 
-#third-parties (libraries externas)
+# Third-parties (libraries externas)
 
-#feramentas disponiveis
+# Feramentas disponiveis
 
 * **bundle-analizer**
   * Ferramenta esta commentada no arquivo `webpack.dev.js` _desabilitada por default_
