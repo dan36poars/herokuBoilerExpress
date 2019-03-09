@@ -1,6 +1,6 @@
 # Boiler Plate Front End Using WebPack
 
-##Criar uma nova página
+## Criar uma nova página
 `newFile = nome do arquivo` <br />
 1. Criar o arguivo `newFile.pug` dentro da pasta `src/build/pug/newFile.pug`
 1. Criar o arquivo `newFile.css` dentro da pasta `src/build/scss/newFile.scss`
@@ -110,12 +110,12 @@ dentro da propriedade plugins adicionar: <br />
 * **páginas comprimidas** com extensões: br, gz
 
 # como utilizar
-###modo de desenvolvimento (development)
+### modo de desenvolvimento (development)
 na linha de comando:
     
     npm run heroku:dev
 
-###modo de produção (production)
+### modo de produção (production)
 na linha de comando:
     
     npm run prod
