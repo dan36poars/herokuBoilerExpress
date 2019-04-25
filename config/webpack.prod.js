@@ -20,7 +20,8 @@ module.exports = {
   output: {
     filename: 'assets/js/[name]-bundle.js',
     path: path.resolve( __dirname, '../dist'),
-    sourceMapFilename: '[file].map'    
+    sourceMapFilename: '[file].map',
+    publicPath: '/'
   },
   optimization:{
     splitChunks: {
