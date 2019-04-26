@@ -21,7 +21,7 @@ module.exports = {
     filename: 'assets/js/[name]-bundle.js',
     path: path.resolve( __dirname, '../dist'),
     sourceMapFilename: '[file].map',
-    publicPath: '/'
+    publicPath: '/'    
   },
   optimization:{
     splitChunks: {
@@ -105,15 +105,37 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {              
+              name: 'assets/fonts/[name].[ext]'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'assets/css/[name].[ext]'
+            }
+          }
+        ]
+      }  
     ]
   },
   plugins: [
     new cleanWebpackPlugin({
-    			root:  process.cwd(),
-  				verbose: false,
- 					dry: false
-    		}
+          root:  process.cwd(),
+          verbose: false,
+          dry: false
+        }
     ),
     new htmlWebpackPlugin({
       filename:  'index.html',
@@ -128,7 +150,8 @@ module.exports = {
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
       assets: [
-        'assets/css/index.css'        
+        'assets/css/index.css',
+        'assets/css/font-awesome.css'
       ],
       append: true
     }),

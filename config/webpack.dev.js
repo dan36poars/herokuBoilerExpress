@@ -84,7 +84,7 @@ module.exports = {
       },
       {
         test: /\.pug$/,
-        use: [       
+        use: [
           {
             loader: 'pug-loader'
           }
@@ -97,6 +97,28 @@ module.exports = {
             loader: 'file-loader',
             options: {
               name: 'images/[name].[ext]'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'fonts/[name].[ext]'
+            }           
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'css/[name].[ext]'
             }
           }
         ]
@@ -117,12 +139,12 @@ module.exports = {
       chunks: ['contato', 'vendors']
     }), 
     new htmlWebpackIncludeAssetsPlugin({
-      files: ['contact.html'],
-      assets: [],
+      files: ['index.html'],
+      assets: ['css/font-awesome.css'],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
-      files: ['index.html'],
+      files: ['contact.html'],
       assets: [],
       append: true
     }),
@@ -130,7 +152,7 @@ module.exports = {
     new htmlWebpackIncludeAssetsPlugin({
       assets: ['modernizr-bundle.js'],
       append: false
-    }),
+    })
     // new BundleAnalyzerPlugin({
     //  generateStatsFile: true
     // })
