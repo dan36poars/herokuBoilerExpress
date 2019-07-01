@@ -9,12 +9,13 @@ const babelMinifyWebpackPlugin = require('babel-minify-webpack-plugin');
 const uglifyJsWebpackPlugin = require('uglifyjs-webpack-plugin');
 const compressionWebackPlugin = require('compression-webpack-plugin');
 const brotliWebpackplugin = require('brotli-webpack-plugin');
-
+const copyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
     index: ['./src/build/js/index.bundle.js'],
     contato: ['./src/build/js/contato.bundle.js'],
+    commons: ['./src/build/js/commons.bundle.js'],
   },
   mode: 'production',
   output: {
@@ -61,7 +62,8 @@ module.exports = {
             loader: 'css-loader',
             options: {
               importLoaders: 2,
-              sourceMap: true
+              sourceMap: true,
+              url: false
             }
           },
           {
@@ -107,7 +109,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
         use: [
           {
             loader: 'file-loader',
@@ -131,6 +133,18 @@ module.exports = {
     ]
   },
   plugins: [
+    new copyPlugin([
+        {
+          from: './src/build/images/*.*',
+          to: 'assets/images/[name].[ext]',
+          test: /\.(jpg|png|svg|jpeg|gif)$/
+        },
+        // {
+        //   from: './src/build/fonts/**/*',
+        //   to: 'assets/fonts/[name].[ext]',
+        //   test: /\.(woff|woff2|eot|ttf|otf|svg)$/
+        // },
+    ]),
     new cleanWebpackPlugin({
           root:  process.cwd(),
           verbose: false,
@@ -140,25 +154,28 @@ module.exports = {
     new htmlWebpackPlugin({
       filename:  'index.html',
       template: './src/build/pug/index.pug',
-      chunks: ['index', 'vendors']
+      chunks: ['index', 'vendors', 'commons']
     }),
     new htmlWebpackPlugin({
       filename: 'contact.html',
       template:  './src/build/pug/contact.pug',
-      chunks: ['contato', 'vendors']
+      chunks: ['contato', 'vendors', 'commons']
     }),    
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
       assets: [
         'assets/css/index.css',
-        'assets/css/font-awesome.css'
+        'assets/css/font-awesome.css',
+        'assets/css/commons.css',      
       ],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['contact.html'],
       assets: [
-        'assets/css/contact.css'             
+        'assets/css/contact.css',
+        'assets/css/font-awesome.css',
+        'assets/css/commons.css',           
       ],
       append: true
     }),
@@ -169,9 +186,9 @@ module.exports = {
     new optimizeCssAssetsWebpackPlugin(),
     // new babelMinifyWebpackPlugin()
     new uglifyJsWebpackPlugin(),
-    new brotliWebpackplugin(),
-    new compressionWebackPlugin({
-      algorithm: 'gzip'
-    })
+    // new brotliWebpackplugin(),
+    // new compressionWebackPlugin({
+    //   algorithm: 'gzip'
+    // })
   ]
 };

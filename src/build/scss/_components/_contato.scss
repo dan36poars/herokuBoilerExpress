@@ -1,0 +1,21 @@
+@import '../../build/style-fonts/new-font.css';
+
+.container-fluid {
+	img {
+		max-width: 50%;
+		margin: 10px 0;
+	}
+
+	.link {
+		color: #FFFFFF;		
+		text-decoration: none;
+		font-size: 20px;
+		left: 50%;
+		position: relative;
+		transform: translateX(-50%);
+		&:hover {
+			color: #FFFFFF;
+		}
+	}
+
+}

@@ -11,6 +11,7 @@ module.exports = {
   entry: {
     index: ['webpack-hot-middleware/client?reload=true','./src/build/js/index.bundle'],
     contato: ['webpack-hot-middleware/client?reload=true', './src/build/js/contato.bundle'],
+    commons: ['webpack-hot-middleware/client?reload=true', './src/build/js/commons.bundle']    
   },
   mode:"development",
   output: {
@@ -102,7 +103,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
         use: [
           {
             loader: 'file-loader',
@@ -131,21 +132,21 @@ module.exports = {
     new htmlWebpackPlugin({
       filename: 'index.html',
       template: './src/build/pug/index.pug',
-      chunks: ['index', 'vendors']
+      chunks: ['index', 'vendors', 'commons']
     }),
     new htmlWebpackPlugin({
       filename: 'contact.html',
       template:  './src/build/pug/contact.pug',
-      chunks: ['contato', 'vendors']
-    }), 
+      chunks: ['contato', 'vendors', 'commons']
+    }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
-      assets: ['css/font-awesome.css'],
+      assets: ['css/font-awesome.css', 'assets/css/commons.css'],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['contact.html'],
-      assets: [],
+      assets: ['css/font-awesome.css', 'assets/css/commons.css'],
       append: true
     }),
     new modernizrWebpackPlugin(configMorenizr),

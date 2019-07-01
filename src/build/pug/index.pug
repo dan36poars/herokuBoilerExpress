@@ -17,10 +17,31 @@ html.no-js(lang="pt-BR")
       [if lt IE 8]>
         <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]
-    .container
-      h1 BoilerPlate and Webpack feature
-      img(src=require('../images/img-01.jpg')).container--img
-      h1.container--header Webpack Ready webpack 4
-      img(src=require('../images/img-01.jpg')).container--img
-      h1.container--header Webpack Ready webpack 4
-      a(href='./contact.html') Contact Page
+    .container-fluid.bg-gradient-danger
+      h1.text-center.text-white.nunito BoilerPlate and Webpack feature
+      img(src=require('../images/img-01.jpg')).d-block.mx-auto.img-fluid
+      h1.text-center.text-white.nunito Webpack Ready webpack 4
+      img(src=require('../images/img-01.jpg')).d-block.mx-auto.img-fluid
+      h1.text-center.text-white.nunito Webpack Ready webpack 4
+      a(href='./contact.html').link.btn.btn-lg.bg-warning.fira-sans Contact Page
+    .container-fluid.bg-gradient-success
+      .col-md-12.m-0.p-0
+        .row.no-gutters
+          .col-md-12
+            h2.text-center.text-white.nunito fonts customizes
+          .col-md-12.mb-4.d-sm-flex.justify-content-center          
+            .row
+              .col-md-12
+                i.icon-radio
+                span.text-white.fira-sans icon web
+                p.text-white.nunito esse icone esta sendo enxergue por todas as páginas.
+              .col-md-12
+                i.icon-web
+                span.text-white.fira-sans icon web
+                p.text-white.nunito esse icone esta sendo enxergue por todas as páginas.
+        .row.no-gutters
+          .col-md-12
+            h2.text-center.text-white.nunito fonts from font-awesome 4.7
+            h2.fa.fa-home.d-block.text-center
+              span.text-white.fira-sans Home
+            p.text-white.nunito.text-center Esse icone faz parte do font-awesome.
