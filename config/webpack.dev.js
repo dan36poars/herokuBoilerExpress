@@ -141,12 +141,12 @@ module.exports = {
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
-      assets: ['css/font-awesome.css', 'assets/css/commons.css'],
+      assets: ['css/font-awesome.css' ],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['contact.html'],
-      assets: ['css/font-awesome.css', 'assets/css/commons.css'],
+      assets: ['css/font-awesome.css' ],
       append: true
     }),
     new modernizrWebpackPlugin(configMorenizr),

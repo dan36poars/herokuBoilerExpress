@@ -14,6 +14,9 @@ na linha de comando:
 > Após executar o comando `npm run prod` a pasta `dist` irá ser criada no root do projeto. :+1:
 
 ## Criar uma nova página
+
+>Quando for criar novas paginas elas devem ser colocadas nesta ordem.
+
 `newFile = nome do arquivo` <br />
 1. Criar o arguivo `newFile.pug` dentro da pasta `src/build/pug/newFile.pug`
 1. Criar o arquivo `newFile.css` dentro da pasta `src/build/scss/newFile.scss`
@@ -43,24 +46,24 @@ dentro da propriedade plugins adicionar: <br />
         new htmlWebpackPlugin({
           filename: 'newFile.html',
           template: './src/build/pug/newFile.pug',
-          chunks: ['newFile', 'vendors']
-        }),
-        new htmlWebpackIncludeAssetsPlugin({
-          files: ['newFile.html'],
-          assets: [
-            'css/newFile.css'        
-          ],
-          append: true
+          chunks: ['newFile', 'vendors', 'commons']
         }),
         new htmlWebpackPlugin({
           filename: 'otherFile.html',
           template: './src/build/pug/otherFile.pug',
-          chunks: ['otherFile', 'vendors']
+          chunks: ['otherFile', 'vendors', 'commons']
+        }),
+        new htmlWebpackIncludeAssetsPlugin({
+          files: ['newFile.html'],
+          assets: [
+            'css/font-awesome.css'        
+          ],
+          append: true
         }),
         new htmlWebpackIncludeAssetsPlugin({
           files: ['otherFile.html'],
           assets: [
-            'css/otherFile.css'        
+            'css/font-awesome.css'        
           ],
           append: true
         }),
@@ -88,17 +91,17 @@ dentro da propriedade plugins adicionar: <br />
           template: './src/build/pug/newFile.pug',
           chunks: ['newFile', 'vendors']
         }),
+        new htmlWebpackPlugin({
+          filename: 'otherFile.html',
+          template: './src/build/pug/otherFile.pug',
+          chunks: ['otherFile', 'vendors']
+        }),
         new htmlWebpackIncludeAssetsPlugin({
           files: ['newFile.html'],
           assets: [
             'assets/css/newFile.css'        
           ],
           append: true
-        }),
-        new htmlWebpackPlugin({
-          filename: 'otherFile.html',
-          template: './src/build/pug/otherFile.pug',
-          chunks: ['otherFile', 'vendors']
         }),
         new htmlWebpackIncludeAssetsPlugin({
           files: ['otherFile.html'],
@@ -138,7 +141,7 @@ dentro da propriedade plugins adicionar: <br />
 
 # Adicionando Assets
 
-quando você cria assets. E este não é incluido pelo Webpack, então pode-se adiciona-lo da seguinte maneira:
+quando cria-se assets. E este não é incluido pelo Webpack, então pode-se adiciona-lo da seguinte maneira:
 
 **No arquivo webpack.dev.js**
 
@@ -151,7 +154,7 @@ quando você cria assets. E este não é incluido pelo Webpack, então pode-se a
     }),
     ...
 
-> no arquivo `webpack.prod.js` apenas adiciona-se a saida compilada pelo webpack no modo de development.
+> no arquivo `webpack.dev.js` apenas adiciona-se a saida compilada pelo webpack no modo de development.
 
 **No arquivo webpack.prod.js**
 
@@ -159,7 +162,11 @@ quando você cria assets. E este não é incluido pelo Webpack, então pode-se a
     , 
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
-      assets: ['assets/css/font-awesome.css'],
+      assets: [
+        'assets/css/index.css',
+        'assets/css/font-awesome.css',
+        'assets/css/commons.css',
+      ],
       append: true
     }),
     ...
@@ -231,7 +238,49 @@ Caso você queira que a font seja instalada globalmente, em vez de instalar a fo
 o arquivo `build/style-fonts/new-fonts.css` dentro do arquivo `build/scss/_components/_custom-fonts.scss` desta maneira sua
 font customizada será enxergada por todas as páginas. e chamar as fontes dentro do entry point `build/js/commons.bundle.js`
 
-  
+# Configurando Queries Via Bootstrap
 
+Dentro da pasta `herokuBoilerExpress\src\build\scss\_bootstrap` tem dois arquivos:
 
+- `_bootstrap.scss` ( Carrega os módulos do BootStrap e as queries customizadas ).
 
+- `_queries.scss` ( As queries customizadas )
+
+**Como incluir as queries**
+
+As queries são incluidas com os métodos que são do bootstrap mas nada impede de criar breakpoints específicos:
+sm = pequeno, md = médio, lg = grande, xl = extra grande
+
+para queries min-width
+- `@include media-breakpoint-up(sm) { ... }`
+- `@include media-breakpoint-up(md) { ... }`
+- `@include media-breakpoint-up(lg) { ... }`
+- `@include media-breakpoint-up(xl) { ... }`
+
+para queries max-width
+- `@include media-breakpoint-down(xs) { ... }`
+- `@include media-breakpoint-down(sm) { ... }`
+- `@include media-breakpoint-down(md) { ... }`
+- `@include media-breakpoint-down(lg) { ... }`
+- `@include media-breakpoint-down(xl) { ... }`
+
+para queries entre min-width and max-width
+- `@include media-breakpoint-only(xs) { ... }`
+- `@include media-breakpoint-only(sm) { ... }`
+- `@include media-breakpoint-only(md) { ... }`
+- `@include media-breakpoint-only(lg) { ... }`
+- `@include media-breakpoint-only(xl) { ... }`
+
+pode-se colocar essas medias queries dentro das classes scss.<br/>
+
+Ex:
+
+        .nav-link {
+          color: blue !important;
+          
+          @include media-breakpoint-up(lg) { 
+            color: red !important;
+          }
+        }
+
+A palavra `!important` pode ser que seja nescessaria em alguns casos. Pois nessa estrutura o bootstrap sobrescreve algumas propriedades de css.
