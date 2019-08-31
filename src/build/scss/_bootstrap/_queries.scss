@@ -2,21 +2,13 @@
 
 // queries for min-width
 @include media-breakpoint-up(sm) {}
-@include media-breakpoint-up(sm) {
-	.nav-link {
-		color: red !important;
-	}
-}
+@include media-breakpoint-up(sm) {}
 @include media-breakpoint-up(lg) {}
 @include media-breakpoint-up(xl) {}
 
 // queries for max-width
 @include media-breakpoint-down(xs) {}
-@include media-breakpoint-down(sm) {
-	#navbarSupportedContent {
-		transition: 0.3s;
-	}
-}
+@include media-breakpoint-down(sm) {}
 @include media-breakpoint-down(md) {}
 @include media-breakpoint-down(lg) {}
 

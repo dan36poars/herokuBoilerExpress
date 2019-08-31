@@ -132,12 +132,14 @@ module.exports = {
     new htmlWebpackPlugin({
       filename: 'index.html',
       template: './src/build/pug/index.pug',
-      chunks: ['index', 'vendors', 'commons']
+      chunksSortMode: 'manual',
+      chunks: ['commons', 'vendors', 'index']
     }),
     new htmlWebpackPlugin({
       filename: 'contact.html',
       template:  './src/build/pug/contact.pug',
-      chunks: ['contato', 'vendors', 'commons']
+      chunksSortMode: 'manual',
+      chunks: ['commons', 'vendors', 'contato']
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],

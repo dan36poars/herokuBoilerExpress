@@ -154,28 +154,30 @@ module.exports = {
     new htmlWebpackPlugin({
       filename:  'index.html',
       template: './src/build/pug/index.pug',
-      chunks: ['index', 'vendors', 'commons']
+      chunksSortMode: 'manual',
+      chunks: ['commons','vendors', 'index']
     }),
     new htmlWebpackPlugin({
       filename: 'contact.html',
       template:  './src/build/pug/contact.pug',
-      chunks: ['contato', 'vendors', 'commons']
+      chunksSortMode: 'manual',
+      chunks: ['commons','vendors', 'contato']
     }),    
     new htmlWebpackIncludeAssetsPlugin({
       files: ['index.html'],
       assets: [
-        'assets/css/index.css',
-        'assets/css/font-awesome.css',
         'assets/css/commons.css',      
+        'assets/css/font-awesome.css',
+        'assets/css/index.css',
       ],
       append: true
     }),
     new htmlWebpackIncludeAssetsPlugin({
       files: ['contact.html'],
       assets: [
-        'assets/css/contact.css',
-        'assets/css/font-awesome.css',
         'assets/css/commons.css',           
+        'assets/css/font-awesome.css',
+        'assets/css/contact.css',
       ],
       append: true
     }),
